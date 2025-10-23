@@ -48,8 +48,17 @@ export function onUnauthorized(callback) {
 }
 
 // URLs base desde .env (Vite)
-const authBaseURL = import.meta.env.VITE_XANO_AUTH_BASE ?? "https://x8ki-let1-twmt.n7.xano.io"
-const coreBaseURL = import.meta.env.VITE_XANO_CORE_BASE ?? "https://x8ki-let1-twmt.n7.xano.io"
+const DEFAULT_AUTH_BASE = "https://x8ki-letl-twmt.n7.xano.io/api:MJq6ok-f"
+const DEFAULT_CORE_BASE = "https://x8ki-letl-twmt.n7.xano.io/api:Ekf2eplz"
+
+const authBaseURL = import.meta.env.VITE_XANO_AUTH_BASE ?? DEFAULT_AUTH_BASE
+const coreBaseURL = import.meta.env.VITE_XANO_CORE_BASE ?? DEFAULT_CORE_BASE
+
+if (!import.meta.env.VITE_XANO_AUTH_BASE || !import.meta.env.VITE_XANO_CORE_BASE) {
+  console.warn(
+    "[http] Variables VITE_XANO_AUTH_BASE o VITE_XANO_CORE_BASE no definidas. Se usan URLs por defecto específicas de Xano."
+  )
+}
 
 // --- Instancias basadas en miniAxios ---
 const httpAuth = axios.create({
